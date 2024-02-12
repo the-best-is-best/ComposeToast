@@ -1,7 +1,6 @@
 package com.example.composetoast
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
@@ -17,6 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.composetoast.ui.theme.ComposeToastTheme
 import io.tbib.composetoast.AdvToast
 import io.tbib.composetoast.rememberAdvToastStates
+import io.tbib.composetoast.toast_ui.EnumToastType
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
@@ -41,7 +41,8 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
     val stateToast = rememberAdvToastStates()
 
     val coroutineScope = rememberCoroutineScope()
-AdvToast.MakeErrorText(state = stateToast,modifier = modifier)
+
+    AdvToast.MakeToast(state = stateToast, toastType = EnumToastType.INFO, paddingBottom = 50)
 
 //    val context = LocalContext.current
 //Toast.makeText(context, "Hello $name!", Toast.LENGTH_SHORT).show()
