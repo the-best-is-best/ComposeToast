@@ -21,7 +21,7 @@ Compose Date Time Picker is available on `mavenCentral()`.
 implementation("io.github.the-best-is-best:compose_toast:1.0.1")
 ```
 
-## Setup
+## Setup add this in AndroidMain
 
 ```kotlin
 AndroidLogoToast.initialization(this)
