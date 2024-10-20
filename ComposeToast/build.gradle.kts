@@ -1,102 +1,84 @@
+@file:OptIn(ExperimentalKotlinGradlePluginApi::class)
+
+import com.vanniktech.maven.publish.SonatypeHost
+import org.gradle.nativeplatform.platform.internal.DefaultNativePlatform.getCurrentOperatingSystem
+import org.jetbrains.compose.ExperimentalComposeLibrary
+import org.jetbrains.compose.desktop.application.dsl.TargetFormat
+import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
+import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSetTree
+
 plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
+    alias(libs.plugins.multiplatform)
+    alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.compose)
+    alias(libs.plugins.android.library)
     id("maven-publish")
     id("signing")
+    alias(libs.plugins.maven.publish)
 }
+
+
+
 
 apply(plugin = "maven-publish")
 apply(plugin = "signing")
 
 
-java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
-
+tasks.withType<PublishToMavenRepository> {
+    val isMac = getCurrentOperatingSystem().isMacOsX
+    onlyIf {
+        isMac.also {
+            if (!isMac) logger.error(
+                """
+                    Publishing the library requires macOS to be able to generate iOS artifacts.
+                    Run the task on a mac or use the project GitHub workflows for publication and release.
+                """
+            )
+        }
+    }
 }
 
 
-afterEvaluate {
-    tasks.withType<PublishToMavenLocal> {
-        // Make 'publishReleasePublicationToMavenLocal' depend on 'assembleRelease'
-        dependsOn("assembleRelease")
-    }
-    publishing {
 
-        publications.create<MavenPublication>("release") {
-            groupId = "io.github.the-best-is-best"
-            artifactId = "compose_toast"
-            version = "1.0.0"
-            from(components["release"])
+mavenPublishing {
+    coordinates("io.github.the-best-is-best", "compose_toast", "1.0.1")
 
+    publishToMavenCentral(SonatypeHost.S01, true)
+    signAllPublications()
 
-
-            //  artifact("$buildDir/outputs/aar/ComposeQuill-release.aar")
-            //artifact("$buildDir/libs/ComposeQuill-release.jar")
-            // Provide artifacts information required by Maven Central
-            pom {
-                name.set("Compose Toast")
-                description.set("A Jetpack Compose Android Library to create a toast.")
-                url.set("https://github.com/the-best-is-best/ComposeToast")
-                licenses {
-                    license {
-                        name.set("Apache-2.0")
-                        url.set("https://opensource.org/licenses/Apache-2.0")
-                    }
-                }
-                issueManagement {
-                    system.set("Github")
-                    url.set("https://github.com/the-best-is-best/ComposeToast/issues")
-                }
-                scm {
-                    connection.set("https://github.com/the-best-is-best/ComposeToast.git")
-                    url.set("https://github.com/the-best-is-best/ComposeToast")
-                }
-                developers {
-                    developer {
-                        id.set("MichelleRaouf")
-                        name.set("Michelle Raouf")
-                        email.set("eng.michelle.raouf@gmail.com")
-                    }
-                }
+    pom {
+        name.set("Compose Toast")
+        description.set(
+            "Compose Toast package provides a simple and customizable implementation of Toast notifications for\n" +
+                    "Jetpack Compose Multiplatform applications. It allows developers to easily display transient\n" +
+                    "messages to users across Android, iOS, and desktop platforms."
+        )
+        url.set("https://github.com/the-best-is-best/ComposeToast")
+        licenses {
+            license {
+                name.set("Apache-2.0")
+                url.set("https://opensource.org/licenses/Apache-2.0")
             }
         }
-        repositories {
-//            maven {
-//                name = "OSSRH-snapshots"
-//                url = uri("https://s01.oss.sonatype.org/content/repositories/snapshots/")
-//                credentials {
-//                    username = System.getenv("MAVEN_NAME")
-//                    password = System.getenv("MAVEN_TOKEN")
-//                }
-//            }
-
-            maven {
-                name = "OSSRH"
-                url = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
-                credentials {
-                    username = System.getenv("MAVEN_NAME")
-                    password = System.getenv("MAVEN_TOKEN")
-                }
+        issueManagement {
+            system.set("Github")
+            url.set("https://github.com/the-best-is-best/ComposeToast/issues")
+        }
+        scm {
+            connection.set("https://github.com/the-best-is-best/ComposeToast.git")
+            url.set("https://github.com/the-best-is-best/ComposeToast")
+        }
+        developers {
+            developer {
+                id.set("MichelleRaouf")
+                name.set("Michelle Raouf")
+                email.set("eng.michelle.raouf@gmail.com")
             }
-//            maven {
-//                name = "LocalMaven"
-//                url = uri("$buildDir/maven")
-//                   }
-//                maven {
-//                    name = "GitHubPackages"
-//                    url = uri("https://github.com/the-best-is-best/TComposeDateTimePicker")
-//                    credentials {
-//                        username = "the-best-is-best"
-//                        password =
-//                            System.getenv("BUILD_MAVEN")
-//                    }
-            //      }
         }
     }
 
 }
-
 
 
 signing {
@@ -104,46 +86,120 @@ signing {
     sign(publishing.publications)
 }
 
-android {
-    namespace = "io.tbib.composetoast"
-    compileSdk = 34
 
-    defaultConfig {
-        minSdk = 21
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
+kotlin {
+    jvmToolchain(17)
+    androidTarget {
+        //https://www.jetbrains.com/help/kotlin-multiplatform-dev/compose-test.html
+        instrumentedTestVariant.sourceSetTree.set(KotlinSourceSetTree.test)
     }
 
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
+    jvm()
+
+    js {
+        browser()
+        binaries.executable()
+    }
+
+    @OptIn(ExperimentalWasmDsl::class)
+    wasmJs {
+        browser()
+        binaries.executable()
+    }
+
+    listOf(
+        iosX64(),
+        iosArm64(),
+        iosSimulatorArm64()
+    ).forEach {
+        it.binaries.framework {
+            baseName = "lib"
+            isStatic = true
         }
     }
-    buildFeatures {
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = "1.8"
+
+    sourceSets {
+        commonMain.dependencies {
+            implementation(compose.runtime)
+            implementation(compose.foundation)
+            implementation(compose.material3)
+            implementation(compose.components.resources)
+            implementation(compose.components.uiToolingPreview)
+        }
+
+        commonTest.dependencies {
+            implementation(kotlin("test"))
+            @OptIn(ExperimentalComposeLibrary::class)
+            implementation(compose.uiTest)
+        }
+
+        androidMain.dependencies {
+            implementation(compose.uiTooling)
+            implementation(libs.androidx.activityCompose)
+        }
+
+        jvmMain.dependencies {
+            implementation(compose.desktop.currentOs)
+            implementation(compose.ui)
+        }
+
+        jsMain.dependencies {
+            implementation(compose.html.core)
+        }
+
+        iosMain.dependencies {
+        }
+
     }
 }
 
+
+android {
+    namespace = "org.company.app"
+    compileSdk = 35
+
+    defaultConfig {
+        minSdk = 21
+        compileOptions {
+            sourceCompatibility = JavaVersion.VERSION_17
+            targetCompatibility = JavaVersion.VERSION_17
+        }
+        buildFeatures {
+            //enables a Compose tooling support in the AndroidStudio
+            compose = true
+        }
+    }
+}
+
+//https://developer.android.com/develop/ui/compose/testing#setup
 dependencies {
-    implementation("androidx.activity:activity-compose:1.8.2")
-    implementation(platform("androidx.compose:compose-bom:2024.02.00"))
-    implementation("androidx.compose.material3:material3:1.2.0")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    androidTestImplementation(libs.androidx.uitest.junit4)
+    debugImplementation(libs.androidx.uitest.testManifest)
+    //temporary fix: https://youtrack.jetbrains.com/issue/CMP-5864
+    androidTestImplementation("androidx.test:monitor") {
+        version { strictly("1.6.1") }
+    }
+}
+
+compose.desktop {
+    application {
+        mainClass = "MainKt"
+
+        nativeDistributions {
+            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
+            packageName = "ComposeApp"
+            packageVersion = "1.0.0"
+
+            linux {
+                iconFile.set(project.file("desktopAppIcons/LinuxIcon.png"))
+            }
+            windows {
+                iconFile.set(project.file("desktopAppIcons/WindowsIcon.ico"))
+            }
+            macOS {
+                iconFile.set(project.file("desktopAppIcons/MacosIcon.icns"))
+                bundleID = "org.company.app.desktopApp"
+            }
+        }
+    }
 }

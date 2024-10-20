@@ -1,18 +1,35 @@
+rootProject.name = "ComoposeToast"
+
 pluginManagement {
     repositories {
-        google()
-        mavenCentral()
+        google {
+            content {
+                includeGroupByRegex("com\\.android.*")
+                includeGroupByRegex("com\\.google.*")
+                includeGroupByRegex("androidx.*")
+                includeGroupByRegex("android.*")
+            }
+        }
         gradlePluginPortal()
-    }
-}
-dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
-    repositories {
-        google()
         mavenCentral()
     }
 }
 
-rootProject.name = "ComposeToast"
-include(":app")
+dependencyResolutionManagement {
+    repositories {
+        google {
+            content {
+                includeGroupByRegex("com\\.android.*")
+                includeGroupByRegex("com\\.google.*")
+                includeGroupByRegex("androidx.*")
+                includeGroupByRegex("android.*")
+            }
+        }
+        mavenCentral()
+        maven("https://maven.pkg.jetbrains.space/kotlin/p/wasm/experimental")
+        maven("https://maven.pkg.jetbrains.space/public/p/ktor/eap")
+    }
+}
 include(":ComposeToast")
+include(":simple:composeApp")
+
