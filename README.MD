@@ -22,7 +22,7 @@ messages to users across Android, iOS, and desktop platforms.
 
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.the-best-is-best/compose_toast)](https://central.sonatype.com/artifact/io.github.the-best-is-best/compose_toast)
 
-Compose Date Time Picker is available on `mavenCentral()`.
+Compose Toast available on `mavenCentral()`.
 
 ```kotlin
 implementation("io.github.the-best-is-best:compose_toast:1.0.1")
