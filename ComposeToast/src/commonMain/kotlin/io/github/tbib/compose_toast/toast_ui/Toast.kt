@@ -22,6 +22,8 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import io.github.tbib.compose_toast.AdvToastStates
 import io.github.tbib.compose_toast.getAppLogo
+import org.jetbrains.compose.resources.StringResource
+import org.jetbrains.compose.resources.stringResource
 
 
 @Composable
@@ -73,7 +75,9 @@ internal fun ToastUi(
                         )
                     }
                     Text(
-                        text = state.message,
+                        text = if (state.message is String) state.message as String else stringResource(
+                            state.message as StringResource
+                        ),
                         color = textColor, // Set text color to white
                         fontSize = 16.sp, // Adjust font size as needed
                         fontWeight = FontWeight.Bold // Make the text bold
@@ -130,7 +134,9 @@ internal fun ToastUi(
                         )
                     }
                     Text(
-                        text = state.message,
+                        text = if (state.message is String) state.message as String else stringResource(
+                            state.message as StringResource
+                        ),
                         color = textColor, // Set text color to white
                         fontSize = 16.sp, // Adjust font size as needed
                         fontWeight = FontWeight.Bold // Make the text bold

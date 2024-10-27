@@ -9,6 +9,7 @@ import androidx.compose.runtime.saveable.listSaver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import kotlinx.coroutines.delay
+import org.jetbrains.compose.resources.StringResource
 
 @Composable
 fun rememberAdvToastStates(): AdvToastStates {
@@ -21,10 +22,20 @@ class AdvToastStates internal constructor(
 
 ) {
     internal var show by mutableStateOf(false)
-    internal var message by mutableStateOf("")
+    internal var message by mutableStateOf<Any>("")
+
     internal var duration by mutableLongStateOf(3000L)
 
     suspend fun show(message: String, duration: Long = 3000L) {
+        this.show = true
+        this.message = message
+        this.duration = duration
+        delay(duration)
+        this.show = false
+
+    }
+
+    suspend fun show(message: StringResource, duration: Long = 3000L) {
         this.show = true
         this.message = message
         this.duration = duration
