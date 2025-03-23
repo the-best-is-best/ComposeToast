@@ -42,7 +42,7 @@ tasks.withType<PublishToMavenRepository> {
 
 
 mavenPublishing {
-    coordinates("io.github.the-best-is-best", "compose_toast", "1.0.3")
+    coordinates("io.github.the-best-is-best", "compose_toast", "1.0.4")
 
     publishToMavenCentral(SonatypeHost.S01, true)
     signAllPublications()
@@ -110,10 +110,11 @@ kotlin {
     listOf(
         iosX64(),
         iosArm64(),
-        iosSimulatorArm64()
+        iosSimulatorArm64(),
+
     ).forEach {
         it.binaries.framework {
-            baseName = "lib"
+            baseName = "composeToast"
             isStatic = true
         }
     }
@@ -155,7 +156,7 @@ kotlin {
 
 
 android {
-    namespace = "org.company.app"
+    namespace = "io.github.the_best_is_best.composetoast"
     compileSdk = 35
 
     defaultConfig {

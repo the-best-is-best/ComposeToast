@@ -1,10 +1,10 @@
 [versions]
-kotlin = "2.0.21"
-compose = "1.7.0"
+kotlin = "2.1.20"
+compose = "1.7.3"
 agp = "8.7.1"
 androidx-activityCompose = "1.9.2"
 androidx-uiTest = "1.7.3"
-maven-publish = "0.29.0"
+maven-publish = "0.30.0"
 
 [libraries]
 
