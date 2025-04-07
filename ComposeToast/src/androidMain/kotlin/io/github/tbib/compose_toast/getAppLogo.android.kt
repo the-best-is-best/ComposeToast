@@ -9,7 +9,7 @@ import androidx.core.graphics.drawable.toBitmap
 actual fun getAppLogo(): ImageBitmap? {
     try {
         val iconDrawable: Drawable =
-            AndroidLogoToast.getActivity().packageManager.getApplicationIcon(AndroidLogoToast.getActivity().applicationInfo.packageName)
+            applicationContext.packageManager.getApplicationIcon(applicationContext.applicationInfo.packageName)
         val bitmapDrawable = iconDrawable.toBitmap()
         val imageBitmap = bitmapDrawable.asImageBitmap()
         return imageBitmap

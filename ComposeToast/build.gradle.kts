@@ -42,7 +42,7 @@ tasks.withType<PublishToMavenRepository> {
 
 
 mavenPublishing {
-    coordinates("io.github.the-best-is-best", "compose_toast", "1.0.4")
+    coordinates("io.github.the-best-is-best", "compose_toast", "1.1.0")
 
     publishToMavenCentral(SonatypeHost.S01, true)
     signAllPublications()
@@ -137,6 +137,7 @@ kotlin {
         androidMain.dependencies {
             implementation(compose.uiTooling)
             implementation(libs.androidx.activityCompose)
+            implementation(libs.androidx.startup.runtime)
         }
 
         jvmMain.dependencies {
