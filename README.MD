@@ -25,7 +25,7 @@ messages to users across Android, iOS, and desktop platforms.
 Compose Toast available on `mavenCentral()`.
 
 ```kotlin
-implementation("io.github.the-best-is-best:compose_toast:1.1.0")
+implementation("io.github.the-best-is-best:compose_toast:1.2.0")
 ```
 
 

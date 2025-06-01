@@ -22,7 +22,7 @@ import platform.CoreGraphics.CGImageGetWidth
 import platform.Foundation.NSBundle
 import platform.UIKit.UIImage
 
-actual fun getAppLogo(): ImageBitmap? {
+fun getAppLogoIOS(): UIImage? {
     val bundle = NSBundle.mainBundle()
     val iconFiles = bundle.objectForInfoDictionaryKey("CFBundleIcons") as? Map<*, *>
     val primaryIcon = iconFiles?.get("CFBundlePrimaryIcon") as? Map<*, *>
@@ -30,8 +30,12 @@ actual fun getAppLogo(): ImageBitmap? {
 
     // Get the name of the first icon file, if available
     val iconName = iconFileNames?.firstOrNull() as? String
-    return iconName?.let { UIImage.imageNamed(it)?.toImageBitmap() }
+    return iconName?.let {
+        UIImage.imageNamed(it)
+    }
 }
+
+actual fun getAppLogo(): ImageBitmap? = getAppLogoIOS()?.toImageBitmap()
 
 fun UIImage.toImageBitmap(): ImageBitmap {
     val skiaImage = this.toSkiaImage() ?: return ImageBitmap(1, 1)
