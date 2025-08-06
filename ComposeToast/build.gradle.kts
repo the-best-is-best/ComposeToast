@@ -40,7 +40,7 @@ tasks.withType<PublishToMavenRepository> {
 
 
 mavenPublishing {
-    coordinates("io.github.the-best-is-best", "compose_toast", "1.2.0")
+    coordinates("io.github.the-best-is-best", "compose_toast", "1.3.0")
 
     publishToMavenCentral(true)
     signAllPublications()
