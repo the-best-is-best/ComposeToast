@@ -1,6 +1,5 @@
 @file:OptIn(ExperimentalKotlinGradlePluginApi::class)
 
-import com.vanniktech.maven.publish.SonatypeHost
 import org.gradle.nativeplatform.platform.internal.DefaultNativePlatform.getCurrentOperatingSystem
 import org.jetbrains.compose.ExperimentalComposeLibrary
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
@@ -43,7 +42,7 @@ tasks.withType<PublishToMavenRepository> {
 mavenPublishing {
     coordinates("io.github.the-best-is-best", "compose_toast", "1.2.0")
 
-    publishToMavenCentral(SonatypeHost.S01, true)
+    publishToMavenCentral(true)
     signAllPublications()
 
     pom {
@@ -141,6 +140,7 @@ kotlin {
         jvmMain.dependencies {
             implementation(compose.desktop.currentOs)
             implementation(compose.ui)
+            implementation(libs.kotlinx.coroutines.swing)
         }
 
         jsMain.dependencies {

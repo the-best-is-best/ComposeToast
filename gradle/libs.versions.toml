@@ -1,10 +1,11 @@
 [versions]
-kotlin = "2.1.21"
-compose = "1.8.1"
+kotlin = "2.2.0"
+compose = "1.8.2"
 agp = "8.10.1"
 androidx-activityCompose = "1.10.1"
 androidx-uiTest = "1.8.2"
-maven-publish = "0.31.0"
+kotlinxCoroutinesSwing = "1.10.2"
+maven-publish = "0.34.0"
 startupRuntime = "1.2.0"
 
 [libraries]
@@ -13,6 +14,7 @@ androidx-activityCompose = { module = "androidx.activity:activity-compose", vers
 androidx-uitest-testManifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "androidx-uiTest" }
 androidx-uitest-junit4 = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "androidx-uiTest" }
 androidx-startup-runtime = { module = "androidx.startup:startup-runtime", version.ref = "startupRuntime" }
+kotlinx-coroutines-swing = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-swing", version.ref = "kotlinxCoroutinesSwing" }
 
 [plugins]
 

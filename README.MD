@@ -66,10 +66,11 @@ enum class EnumToastType {
 #### How make native toast
 
 ```kotlin
-// work on ios and android only
 NativeShowToast.show(
     "Native toast Native toast Native toast Native toast Native toast",
     NativeToastType.LONG
 )
 
 ```
+
+### JVM logo display if image added in /images/app_logo.png of resources

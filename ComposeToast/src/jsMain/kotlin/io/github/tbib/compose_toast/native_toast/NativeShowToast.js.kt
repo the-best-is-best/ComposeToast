@@ -5,5 +5,6 @@ actual object NativeShowToast {
         msg: String,
         type: NativeToastType
     ) {
+        js("alert(msg)")
     }
 }

@@ -1,13 +1,20 @@
 package io.github.tbib.compose_toast
 
 import androidx.compose.ui.graphics.ImageBitmap
-import java.io.InputStream
+import androidx.compose.ui.graphics.toComposeImageBitmap
+import javax.imageio.ImageIO
 
-object JVMComposeToast {
-    var appLogoPath: InputStream? = null
-}
 
-// Function to get the application logo
 actual fun getAppLogo(): ImageBitmap? {
-    return null
+    return try {
+        // Single reliable method that works everywhere
+        val url = object {}.javaClass.getResource("/images/app_logo.png")
+            ?: return null
+
+        url.openStream().use { stream ->
+            ImageIO.read(stream)?.toComposeImageBitmap()
+        }
+    } catch (e: Exception) {
+        null // Complete silence on failure
+    }
 }
