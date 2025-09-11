@@ -40,7 +40,7 @@ tasks.withType<PublishToMavenRepository> {
 
 
 mavenPublishing {
-    coordinates("io.github.the-best-is-best", "compose_toast", "1.3.0")
+    coordinates("io.github.the-best-is-best", "compose_toast", "2.0.0")
 
     publishToMavenCentral(true)
     signAllPublications()
@@ -94,9 +94,15 @@ kotlin {
 
     jvm()
 
+
     js {
+        outputModuleName = "compose-toast"
         browser()
-        binaries.executable()
+        binaries.library()
+        generateTypeScriptDefinitions()
+        compilerOptions {
+            target = "es2015"
+        }
     }
 
     @OptIn(ExperimentalWasmDsl::class)
@@ -145,6 +151,7 @@ kotlin {
 
         jsMain.dependencies {
             implementation(compose.html.core)
+
         }
 
         iosMain.dependencies {

@@ -6,18 +6,33 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.w3c.dom.HTMLElement
 
-@OptIn(ExperimentalJsExport::class)
-@JsExport
-actual object NativeShowToast {
+object WebShowToast {
     private val scope = MainScope()
 
-    actual fun show(
+    // تحويل لون Long إلى CSS rgba أو HEX
+    private fun longToCssColor(color: Long): String {
+        val a = ((color shr 24) and 0xFF) / 255.0
+        val r = ((color shr 16) and 0xFF)
+        val g = ((color shr 8) and 0xFF)
+        val b = (color and 0xFF)
+
+        return if (a > 0.0) {
+            "rgba($r,$g,$b,$a)"
+        } else {
+            "#${r.toString(16).padStart(2, '0')}" +
+                    g.toString(16).padStart(2, '0') +
+                    b.toString(16).padStart(2, '0')
+        }
+    }
+
+    fun show(
         msg: String,
-        type: NativeToastType
+        type: NativeToastType,
+        backgroundColor: Long = 0x000000
     ) {
         val body = document.body ?: return
 
-        // Create toast container if not exists
+        // Container
         val containerId = "toast-container"
         var container = document.getElementById(containerId) as? HTMLElement
         if (container == null) {
@@ -26,6 +41,7 @@ actual object NativeShowToast {
             container.setAttribute(
                 "style",
                 """
+                background-color: ${longToCssColor(backgroundColor)};
                 position: fixed;
                 bottom: 20px;
                 right: 20px;
@@ -38,13 +54,13 @@ actual object NativeShowToast {
             body.appendChild(container)
         }
 
-        // Create toast element
+        // Toast
         val toast = document.createElement("div") as HTMLElement
         toast.textContent = msg
         toast.setAttribute(
             "style",
             """
-            background-color: rgba(0,0,0,0.7);
+            background-color: ${longToCssColor(backgroundColor)};
             color: white;
             padding: 10px 16px;
             border-radius: 8px;
@@ -57,7 +73,7 @@ actual object NativeShowToast {
 
         container.appendChild(toast)
 
-        // Auto remove after 3s
+        // Auto remove
         scope.launch {
             delay(3000)
             toast.style.opacity = "0"
@@ -65,5 +81,4 @@ actual object NativeShowToast {
             container.removeChild(toast)
         }
     }
-
 }

@@ -23,7 +23,10 @@ kotlin {
     jvm()
 
 
-
+    js {
+        browser()
+        binaries.executable()
+    }
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
         browser()
@@ -68,6 +71,9 @@ kotlin {
         }
 
         iosMain.dependencies {
+        }
+        jsMain.dependencies {
+            implementation(compose.runtime)
         }
 
     }
