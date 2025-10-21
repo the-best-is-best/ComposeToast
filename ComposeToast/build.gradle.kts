@@ -79,11 +79,12 @@ mavenPublishing {
 }
 
 
-signing {
-    useGpgCmd()
-    sign(publishing.publications)
+if (project.hasProperty("signing.keyId")) {
+    signing {
+        useGpgCmd()
+        sign(publishing.publications)
+    }
 }
-
 
 kotlin {
     jvmToolchain(17)
