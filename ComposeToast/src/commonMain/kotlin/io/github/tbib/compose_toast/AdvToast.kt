@@ -142,7 +142,8 @@ class AdvToast {
                 paddingBottom = paddingBottom,
                 paddingTop = paddingTop,
                 //  backgroundColor= backgroundColor,
-                align = align, textColor = textColor
+                align = align, textColor = textColor,
+
             )
         }
     }

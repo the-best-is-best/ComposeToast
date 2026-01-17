@@ -1,0 +1,37 @@
+import com.android.build.api.dsl.ApplicationExtension
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
+plugins {
+    alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.android.application)
+}
+
+extensions.configure<ApplicationExtension>("android")
+{
+    namespace = "org.company.app.androidApp"
+    compileSdk = 36
+
+    defaultConfig {
+        minSdk = 23
+        targetSdk = 36
+
+        applicationId = "org.company.app.androidApp"
+        versionCode = 1
+        versionName = "1.0.0"
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+}
+
+kotlin {
+    compilerOptions { jvmTarget.set(JvmTarget.JVM_17) }
+}
+
+dependencies {
+    implementation(project(":simple:composeApp"))
+    implementation(libs.androidx.activityCompose)
+}

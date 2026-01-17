@@ -33,3 +33,4 @@ dependencyResolutionManagement {
 include(":ComposeToast")
 include(":simple:composeApp")
 
+include(":simple:androidSimple")

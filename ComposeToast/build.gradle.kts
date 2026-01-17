@@ -1,17 +1,14 @@
 @file:OptIn(ExperimentalKotlinGradlePluginApi::class)
 
-import com.vanniktech.maven.publish.SonatypeHost
 import org.gradle.nativeplatform.platform.internal.DefaultNativePlatform.getCurrentOperatingSystem
-import org.jetbrains.compose.ExperimentalComposeLibrary
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
-import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSetTree
 
 plugins {
     alias(libs.plugins.multiplatform)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.compose)
-    alias(libs.plugins.android.library)
+    alias(libs.plugins.android.kotlin.multiplatform.library)
     id("maven-publish")
     id("signing")
     alias(libs.plugins.maven.publish)
@@ -41,9 +38,9 @@ tasks.withType<PublishToMavenRepository> {
 
 
 mavenPublishing {
-    coordinates("io.github.the-best-is-best", "compose_toast", "1.2.0")
+    coordinates("io.github.the-best-is-best", "compose_toast", "2.1.2")
 
-    publishToMavenCentral(SonatypeHost.S01, true)
+    publishToMavenCentral(true)
     signAllPublications()
 
     pom {
@@ -80,24 +77,28 @@ mavenPublishing {
 }
 
 
-signing {
-    useGpgCmd()
-    sign(publishing.publications)
+if (project.hasProperty("signing.keyId")) {
+    signing {
+        useGpgCmd()
+        sign(publishing.publications)
+    }
 }
-
 
 kotlin {
     jvmToolchain(17)
-    androidTarget {
-        //https://www.jetbrains.com/help/kotlin-multiplatform-dev/compose-test.html
-        instrumentedTestVariant.sourceSetTree.set(KotlinSourceSetTree.test)
-    }
+
 
     jvm()
 
+
     js {
+        outputModuleName = "compose-toast"
         browser()
-        binaries.executable()
+        binaries.library()
+        generateTypeScriptDefinitions()
+        compilerOptions {
+            target = "es2015"
+        }
     }
 
     @OptIn(ExperimentalWasmDsl::class)
@@ -119,51 +120,55 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            implementation(compose.runtime)
-            implementation(compose.foundation)
-            implementation(compose.material3)
-            implementation(compose.components.resources)
-            implementation(compose.components.uiToolingPreview)
+            implementation(libs.runtime)
+            implementation(libs.jetbrains.foundation)
+            implementation(libs.material3)
+            implementation(libs.components.resources)
+            implementation(libs.ui.tooling.preview)
         }
 
-        commonTest.dependencies {
-            implementation(kotlin("test"))
-            @OptIn(ExperimentalComposeLibrary::class)
-            implementation(compose.uiTest)
-        }
+//        commonTest.dependencies {
+//            implementation(kotlin("test"))
+//            @OptIn(ExperimentalComposeLibrary::class)
+//            implementation(compose.uiTest)
+//        }
 
         androidMain.dependencies {
-            implementation(compose.uiTooling)
+            implementation(libs.ui.tooling)
             implementation(libs.androidx.activityCompose)
             implementation(libs.androidx.startup.runtime)
         }
 
         jvmMain.dependencies {
             implementation(compose.desktop.currentOs)
-            implementation(compose.ui)
+            implementation(libs.ui)
+            implementation(libs.kotlinx.coroutines.swing)
         }
 
         jsMain.dependencies {
             implementation(compose.html.core)
+
         }
 
         iosMain.dependencies {
         }
 
     }
-}
 
+    android {
+        namespace = "io.github.the_best_is_best.composetoast"
+        compileSdk = 36
 
-android {
-    namespace = "io.github.the_best_is_best.composetoast"
-    compileSdk = 36
-
-    defaultConfig {
-        minSdk = 21
-
-        buildFeatures {
-            //enables a Compose tooling support in the AndroidStudio
-            compose = true
-        }
+//
+//        defaultConfig {
+//            minSdk = 23
+//
+//            buildFeatures {
+//                //enables a Compose tooling support in the AndroidStudio
+//                compose = true
+//            }
+//        }
     }
 }
+
+

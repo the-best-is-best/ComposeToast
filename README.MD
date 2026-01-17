@@ -24,8 +24,17 @@ messages to users across Android, iOS, and desktop platforms.
 
 Compose Toast available on `mavenCentral()`.
 
+#### For AGP 9
+
 ```kotlin
-implementation("io.github.the-best-is-best:compose_toast:1.2.0")
+implementation("io.github.the-best-is-best:compose_toast:2.1.2")
+
+```
+
+#### For AGP 8
+
+```kotlin
+implementation("io.github.the-best-is-best:compose_toast:2.1.1")
 ```
 
 
@@ -66,10 +75,11 @@ enum class EnumToastType {
 #### How make native toast
 
 ```kotlin
-// work on ios and android only
 NativeShowToast.show(
     "Native toast Native toast Native toast Native toast Native toast",
     NativeToastType.LONG
 )
 
 ```
+
+### JVM logo display if image added in /images/app_logo.png of resources

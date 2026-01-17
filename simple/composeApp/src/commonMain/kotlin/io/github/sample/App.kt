@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
@@ -30,7 +29,7 @@ import io.github.tbib.compose_toast.toast_ui.EnumToastType
 import kotlinx.coroutines.launch
 
 @Composable
-internal fun App() = AppTheme {
+fun App() = AppTheme {
     val stateToast = rememberAdvToastStates()
 
     val stateCustomToast = rememberAdvToastStates()
@@ -42,10 +41,11 @@ internal fun App() = AppTheme {
         AdvToast.MakeCustomToast(
             state = stateCustomToast,
             textColor = Color.Black,
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 50.dp)
+            paddingTop = 50,
+            modifier = Modifier.padding(horizontal = 50.dp)
                 .background(Color.Cyan, shape = RoundedCornerShape(8.dp)),
             // backgroundColor = Color.Cyan,
-            align = Arrangement.Center,
+            align = Arrangement.Top,
         )
         Column(
             modifier = Modifier
