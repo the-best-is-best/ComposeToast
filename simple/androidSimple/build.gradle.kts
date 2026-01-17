@@ -1,14 +1,11 @@
-import com.android.build.api.dsl.ApplicationExtension
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.compose.compiler)
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.android.application)
 }
 
-extensions.configure<ApplicationExtension>("android")
-{
+android {
     namespace = "org.company.app.androidApp"
     compileSdk = 36
 
