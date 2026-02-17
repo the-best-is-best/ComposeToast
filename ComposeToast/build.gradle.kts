@@ -14,13 +14,6 @@ plugins {
     alias(libs.plugins.maven.publish)
 }
 
-
-
-
-apply(plugin = "maven-publish")
-apply(plugin = "signing")
-
-
 tasks.withType<PublishToMavenRepository> {
     val isMac = getCurrentOperatingSystem().isMacOsX
     onlyIf {

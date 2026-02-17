@@ -67,7 +67,7 @@ kotlin {
         iosMain.dependencies {
         }
         jsMain.dependencies {
-            implementation(compose.runtime)
+            implementation(libs.runtime)
         }
 
     }

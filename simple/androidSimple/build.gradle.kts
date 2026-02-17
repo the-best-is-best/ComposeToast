@@ -31,4 +31,6 @@ kotlin {
 dependencies {
     implementation(project(":simple:composeApp"))
     implementation(libs.androidx.activityCompose)
+    implementation(libs.androidx.material3)
+    implementation(project(":toastKMP"))
 }
