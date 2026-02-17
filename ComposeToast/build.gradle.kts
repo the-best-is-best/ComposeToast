@@ -38,7 +38,7 @@ tasks.withType<PublishToMavenRepository> {
 
 
 mavenPublishing {
-    coordinates("io.github.the-best-is-best", "compose_toast", "2.1.2")
+    coordinates("io.github.the-best-is-best", "compose_toast", "3.0.0")
 
     publishToMavenCentral(true)
     signAllPublications()
@@ -125,6 +125,8 @@ kotlin {
             implementation(libs.material3)
             implementation(libs.components.resources)
             implementation(libs.ui.tooling.preview)
+
+            api(project(":toastKMP"))
         }
 
 //        commonTest.dependencies {
@@ -136,7 +138,6 @@ kotlin {
         androidMain.dependencies {
             implementation(libs.ui.tooling)
             implementation(libs.androidx.activityCompose)
-            implementation(libs.androidx.startup.runtime)
         }
 
         jvmMain.dependencies {
@@ -146,7 +147,7 @@ kotlin {
         }
 
         jsMain.dependencies {
-            implementation(compose.html.core)
+            implementation(libs.html.core)
 
         }
 

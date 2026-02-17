@@ -1,21 +1,10 @@
 package io.github.tbib.compose_toast
 
-import android.graphics.drawable.Drawable
 import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.ui.graphics.asImageBitmap
-import androidx.core.graphics.drawable.toBitmap
+import io.github.the_best_is_best.toast_kmp.getAppLogo
 
-
-actual fun getAppLogo(): ImageBitmap? {
-    try {
-        val iconDrawable: Drawable =
-            applicationContext.packageManager.getApplicationIcon(applicationContext.applicationInfo.packageName)
-        val bitmapDrawable = iconDrawable.toBitmap()
-        val imageBitmap = bitmapDrawable.asImageBitmap()
-        return imageBitmap
-    } catch (e: Exception) {
-        println("error get logo ${e}")
-        return null
-    }
+internal actual fun getAppLogo(): ImageBitmap? {
+    return getAppLogo()?.asAndroidBitmap()?.asImageBitmap()
 }
-

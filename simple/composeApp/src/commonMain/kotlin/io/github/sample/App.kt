@@ -22,10 +22,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import io.github.sample.theme.AppTheme
 import io.github.tbib.compose_toast.AdvToast
-import io.github.tbib.compose_toast.native_toast.NativeShowToast
-import io.github.tbib.compose_toast.native_toast.NativeToastType
 import io.github.tbib.compose_toast.rememberAdvToastStates
 import io.github.tbib.compose_toast.toast_ui.EnumToastType
+import io.github.tbib.compose_toast.toast_ui.NativeShowToastCMP
+import io.github.tbib.compose_toast.toast_ui.NativeToastTypeCMP
 import kotlinx.coroutines.launch
 
 @Composable
@@ -72,9 +72,9 @@ fun App() = AppTheme {
             }
             Spacer(Modifier.height(10.dp))
             ElevatedButton(onClick = {
-                NativeShowToast.show(
+                NativeShowToastCMP.show(
                     "Native toast Native toast Native toast Native toast Native toast",
-                    NativeToastType.LONG
+                    NativeToastTypeCMP.LONG
                 )
             }) {
                 Text(text = "Show native Toast")

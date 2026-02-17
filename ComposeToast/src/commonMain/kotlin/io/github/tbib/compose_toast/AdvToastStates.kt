@@ -1,6 +1,7 @@
 package io.github.tbib.compose_toast
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -18,6 +19,7 @@ fun rememberAdvToastStates(): AdvToastStates {
     }
 }
 
+@Stable
 class AdvToastStates internal constructor(
 
 ) {
