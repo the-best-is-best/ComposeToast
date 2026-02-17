@@ -1,19 +1,15 @@
-import UIKit
-import ComposeApp
-
+import SwiftUI
+import toastKMPKit
 @main
-class AppDelegate: UIResponder, UIApplicationDelegate {
-    var window: UIWindow?
+struct iOSApp: App {
+    var body: some Scene {
+        WindowGroup {
+            //  ContentView()
+            Button("Show Toast") {
+                NativeShowToast.shared.show(msg: "Native toast from swft", type: NativeToastType.long_
 
-    func application(
-        _ application: UIApplication,
-        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
-    ) -> Bool {
-        window = UIWindow(frame: UIScreen.main.bounds)
-        if let window = window {
-            window.rootViewController = MainKt.MainViewController()
-            window.makeKeyAndVisible()
+                )
+            }
         }
-        return true
     }
 }
