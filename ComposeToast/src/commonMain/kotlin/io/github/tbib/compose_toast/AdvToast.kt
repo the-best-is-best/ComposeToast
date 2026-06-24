@@ -1,6 +1,7 @@
 package io.github.tbib.compose_toast
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -128,20 +129,20 @@ class AdvToast {
 
         @Composable
         fun MakeCustomToast(
+            hideAppIcon: Boolean = false,
             state: AdvToastStates,
             modifier: Modifier = Modifier,
             textColor: Color,
-            paddingTop: Int = 0,
-            paddingBottom: Int = 0,
-            // backgroundColor: Color,
+            paddingValues: PaddingValues,
+            marginValues: PaddingValues,
             align: Arrangement.Vertical = Arrangement.Bottom
         ) {
             ToastUi(
+                hideAppIcon = hideAppIcon,
                 state = state,
                 modifier = modifier,
-                paddingBottom = paddingBottom,
-                paddingTop = paddingTop,
-                //  backgroundColor= backgroundColor,
+                paddingValues = paddingValues,
+                marginValues = marginValues,
                 align = align, textColor = textColor,
 
             )
