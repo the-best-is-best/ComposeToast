@@ -79,21 +79,11 @@ kotlin {
     // Target declarations - add or remove as needed below. These define
     // which platforms this KMP module supports.
     // See: https://kotlinlang.org/docs/multiplatform-discover-project.html#targets
-    androidLibrary {
+    android {
         namespace = "io.github.the_best_is_best.toast_kmp"
-        compileSdk {
-            version = release(36) { minorApiLevel = 1 }
-        }
-        minSdk = 21
+        compileSdk = 37
+        minSdk = 23
 
-        withHostTestBuilder {
-        }
-
-        withDeviceTestBuilder {
-            sourceSetTreeName = "test"
-        }.configure {
-            instrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        }
     }
 
     // For iOS targets, this is also where you should
@@ -106,7 +96,6 @@ kotlin {
     val xcfName = "toastKMPKit"
 
     listOf(
-        iosX64(),
         iosArm64(),
         iosSimulatorArm64(),
     ).forEach {

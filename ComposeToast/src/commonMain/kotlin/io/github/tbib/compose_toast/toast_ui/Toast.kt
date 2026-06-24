@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -93,9 +94,10 @@ internal fun ToastUi(
     modifier: Modifier = Modifier,
     state: AdvToastStates,
     align: Arrangement.Vertical,
-    paddingTop: Int = 0,
-    paddingBottom: Int = 0,
-    textColor: Color
+    paddingValues: PaddingValues,
+    marginValues: PaddingValues,
+    textColor: Color,
+    hideAppIcon: Boolean,
 ) {
     val imageBitmap = getAppLogo()
 
@@ -103,12 +105,8 @@ internal fun ToastUi(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(
-                    top = paddingTop.dp,
-                    bottom = paddingBottom.dp,
-                    start = 16.dp, // Padding from the sides
-                    end = 16.dp
-                ).zIndex(1f) // Ensure it's on top of other content
+                .padding(paddingValues)
+                .zIndex(1f) // Ensure it's on top of other content
             ,
             verticalArrangement = align,
             horizontalAlignment = Alignment.CenterHorizontally
@@ -116,7 +114,7 @@ internal fun ToastUi(
             Box(
                 modifier = modifier
                     //  .fillMaxWidth() // Fill the width of the parent
-                    .padding(horizontal = 16.dp, vertical = 8.dp) // Provide margin
+                    .padding(marginValues) // Provide margin
                 , // Apply background and rounded corners
                 contentAlignment = Alignment.Center // Align content to the center
             ) {
@@ -125,7 +123,7 @@ internal fun ToastUi(
                     horizontalArrangement = Arrangement.spacedBy(10.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    if (imageBitmap != null) {
+                    if (imageBitmap != null && !hideAppIcon) {
                         Image(
                             bitmap = imageBitmap,
                             contentDescription = null,

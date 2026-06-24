@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
@@ -41,7 +42,8 @@ fun App() = AppTheme {
         AdvToast.MakeCustomToast(
             state = stateCustomToast,
             textColor = Color.Black,
-            paddingTop = 50,
+            paddingValues = PaddingValues(bottom = 100.dp, top = 0.dp, start = 10.dp, end = 10.dp),
+            marginValues = PaddingValues(bottom = 0.dp),
             modifier = Modifier.padding(horizontal = 50.dp)
                 .background(Color.Cyan, shape = RoundedCornerShape(8.dp)),
             // backgroundColor = Color.Cyan,
