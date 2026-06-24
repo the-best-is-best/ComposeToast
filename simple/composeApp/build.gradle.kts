@@ -28,7 +28,6 @@ kotlin {
     }
 
     listOf(
-        iosX64(),
         iosArm64(),
         iosSimulatorArm64()
     ).forEach {
@@ -76,7 +75,7 @@ kotlin {
 
     android {
         namespace = "io.github.sample"
-        compileSdk = 36
+        compileSdk = 37
         minSdk = 23
 
 

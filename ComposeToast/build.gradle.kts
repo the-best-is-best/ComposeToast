@@ -101,7 +101,6 @@ kotlin {
     }
 
     listOf(
-        iosX64(),
         iosArm64(),
         iosSimulatorArm64(),
 
@@ -151,7 +150,7 @@ kotlin {
 
     android {
         namespace = "io.github.the_best_is_best.composetoast"
-        compileSdk = 36
+        compileSdk = 37
 
 //
 //        defaultConfig {
