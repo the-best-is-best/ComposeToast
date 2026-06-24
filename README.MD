@@ -52,13 +52,13 @@ repositories {
 #### Dependency (ComposeToast, AGP 9)
 
 ```kotlin
-implementation("io.github.the-best-is-best:compose_toast:3.1.0")
+implementation("io.github.the-best-is-best:compose_toast:3.2.0")
 ```
 
 #### Dependency (ComposeToast, AGP 8)
 
 ```kotlin
-implementation("io.github.the-best-is-best:compose_toast:3.1.0")
+implementation("io.github.the-best-is-best:compose_toast:3.2.0")
 ```
 
 In a Kotlin Multiplatform project you typically add it to `commonMain`:

@@ -31,7 +31,7 @@ tasks.withType<PublishToMavenRepository> {
 
 
 mavenPublishing {
-    coordinates("io.github.the-best-is-best", "compose_toast", "3.1.0")
+    coordinates("io.github.the-best-is-best", "compose_toast", "3.2.0")
 
     publishToMavenCentral(true)
     signAllPublications()
@@ -70,12 +70,11 @@ mavenPublishing {
 }
 
 
-if (project.hasProperty("signing.keyId")) {
     signing {
-        useGpgCmd()
+//        useGpgCmd()
         sign(publishing.publications)
     }
-}
+
 
 kotlin {
     jvmToolchain(17)
